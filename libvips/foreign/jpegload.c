@@ -101,11 +101,9 @@ vips_foreign_load_jpeg_build( VipsObject *object )
 {
 	VipsForeignLoadJpeg *jpeg = (VipsForeignLoadJpeg *) object;
 
-	if( jpeg->shrink != 1 && 
-		jpeg->shrink != 2 && 
-		jpeg->shrink != 4 && 
-		jpeg->shrink != 8 ) {
-		vips_error( "VipsFormatLoadJpeg", 
+	if( jpeg->shrink < 1 ||
+		jpeg->shrink > 8 ) {
+		vips_error( "VipsFormatLoadJpeg",
 			_( "bad shrink factor %d" ), jpeg->shrink );
 		return( -1 );
 	}
