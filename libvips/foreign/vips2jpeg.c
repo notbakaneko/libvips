@@ -596,19 +596,18 @@ write_vips( Write *write, int qfac, const char *profile,
 			write_blob( write, 
 				VIPS_META_IPTC_NAME, JPEG_APP0 + 13 ) )
 			return( -1 );
-
-		/* A profile supplied as an argument overrides an embedded 
-		 * profile. "none" means don't attach a profile.
-		 */
-		if( profile && 
-			strcmp( profile, "none" ) != 0 &&
-			write_profile_file( write, profile ) )
-			return( -1 );
-		if( !profile && 
-			vips_image_get_typeof( in, VIPS_META_ICC_NAME ) && 
-			write_profile_meta( write ) )
-			return( -1 );
 	}
+	/* A profile supplied as an argument overrides an embedded 
+		* profile. "none" means don't attach a profile.
+		*/
+	if( profile && 
+		strcmp( profile, "none" ) != 0 &&
+		write_profile_file( write, profile ) )
+		return( -1 );
+	if( !profile && 
+		vips_image_get_typeof( in, VIPS_META_ICC_NAME ) && 
+		write_profile_meta( write ) )
+		return( -1 );
 
 	/* Write data. Note that the write function grabs the longjmp()!
 	 */
